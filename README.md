@@ -69,7 +69,7 @@ EQL uses a two-phase interpreter to transform your queries into RPC calls:
 
 For example, this query:
 ```sql
-GET balance, nonce FROM account vitalik.eth ON eth
+SELECT balance, nonce FROM account vitalik.eth ON eth
 ```
 
 Gets transformed into:
