@@ -14,7 +14,7 @@ get       = {
 entity = { account_get | block_get | tx_get | log_get }
 
 account_get = {
-    "GET" ~
+    "SELECT" ~
     WHITESPACE* ~
     account_fields ~
     WHITESPACE* ~
@@ -26,7 +26,7 @@ account_get = {
 }
 
 block_get = {
-    "GET" ~
+    "SELECT" ~
     WHITESPACE* ~
     block_fields ~
     WHITESPACE* ~
@@ -38,7 +38,7 @@ block_get = {
 }
 
 tx_get = {
-    "GET" ~
+    "SELECT" ~
     WHITESPACE* ~
     tx_fields ~
     WHITESPACE* ~
@@ -50,7 +50,7 @@ tx_get = {
 }
 
 log_get = {
-    "GET" ~
+    "SELECT" ~
     WHITESPACE* ~
     log_fields ~
     WHITESPACE* ~

@@ -68,7 +68,7 @@ mod tests {
     #[test]
     fn test_build_ast_with_account_fields() {
         let source =
-            "GET nonce, balance, code FROM account 0x1234567890123456789012345678901234567890 ON eth";
+            "SELECT nonce, balance, code FROM account 0x1234567890123456789012345678901234567890 ON eth";
         let address = Address::from_str("0x1234567890123456789012345678901234567890").unwrap();
         let expected = vec![Expression::Get(GetExpression {
             entity: Entity::Account(Account::new(
@@ -93,7 +93,7 @@ mod tests {
 
     #[test]
     fn test_build_get_ast_using_ens() {
-        let source = "GET nonce, balance FROM account vitalik.eth ON eth";
+        let source = "SELECT nonce, balance FROM account vitalik.eth ON eth";
         let name = String::from("vitalik.eth");
         let expected = vec![Expression::Get(GetExpression {
             entity: Entity::Account(Account::new(
@@ -111,7 +111,7 @@ mod tests {
 
     #[test]
     fn test_build_get_ast_with_block_fields() {
-        let source = "GET parent_hash, state_root, transactions_root, receipts_root, \
+        let source = "SELECT parent_hash, state_root, transactions_root, receipts_root, \
             logs_bloom, extra_data, mix_hash, total_difficulty, base_fee_per_gas, \
             withdrawals_root, blob_gas_used, excess_blob_gas, parent_beacon_block_root, \
             size FROM block 1 ON eth";
@@ -151,7 +151,7 @@ mod tests {
 
     #[test]
     fn test_build_get_ast_using_block_ranges() {
-        let source = "GET timestamp FROM block 1:2 ON eth";
+        let source = "SELECT timestamp FROM block 1:2 ON eth";
         let expected = vec![Expression::Get(GetExpression {
             entity: Entity::Block(Block::new(
                 Some(vec![BlockId::Range(BlockRange::new(
@@ -174,7 +174,7 @@ mod tests {
 
     #[test]
     fn test_build_get_ast_using_block_number_list() {
-        let source = "GET timestamp FROM block 1,2,3 ON eth";
+        let source = "SELECT timestamp FROM block 1,2,3 ON eth";
 
         let expected = vec![Expression::Get(GetExpression {
             entity: Entity::Block(Block::new(
@@ -198,7 +198,7 @@ mod tests {
 
     #[test]
     fn test_build_ast_with_transaction_fields() {
-        let source = "GET type, hash, from, to, data, value, gas_price, gas_limit, \
+        let source = "SELECT type, hash, from, to, data, value, gas_price, gas_limit, \
             status, v, r, s, max_fee_per_blob_gas, max_fee_per_gas, \
             max_priority_fee_per_gas, y_parity, authorization_list \
             FROM tx 0x8a6a279a4d28dcc62bcb2f2a3214c93345c107b74f3081754e27471c50783f81 \
@@ -242,7 +242,7 @@ mod tests {
 
     #[test]
     fn test_build_ast_from_transaction_list() {
-        let source = "GET hash FROM tx 0x8a6a279a4d28dcc62bcb2f2a3214c93345c107b74f3081754e27471c50783f81, 0x12afe6797be838900c5632de516ab415addd026335461e9471dfdec17f3d4510 ON eth";
+        let source = "SELECT hash FROM tx 0x8a6a279a4d28dcc62bcb2f2a3214c93345c107b74f3081754e27471c50783f81, 0x12afe6797be838900c5632de516ab415addd026335461e9471dfdec17f3d4510 ON eth";
 
         let expected = vec![Expression::Get(GetExpression {
             entity: Entity::Transaction(Transaction::new(
@@ -265,7 +265,7 @@ mod tests {
 
     #[test]
     fn test_build_ast_with_dump() {
-        let source = "GET balance FROM account vitalik.eth ON eth >> vitalik-balance.csv";
+        let source = "SELECT balance FROM account vitalik.eth ON eth >> vitalik-balance.csv";
 
         let expected = vec![Expression::Get(GetExpression {
             entity: Entity::Account(Account::new(
@@ -286,14 +286,14 @@ mod tests {
     #[test]
     fn test_build_ast_with_log_fields() {
         let source =
-            "GET address, topic0, topic1, topic2, topic3, data, block_hash, block_number, \
+            "SELECT address, topic0, topic1, topic2, topic3, data, block_hash, block_number, \
             block_timestamp, transaction_hash, transaction_index, log_index, removed \
             FROM log \
             WHERE block = 4638757, \
                   address = 0xdAC17F958D2ee523a2206206994597C13D831ec7, \
                   topic0 = 0xcb8241adb0c3fdb35b70c24ce35c5eb0c17af7431c99f827d44a445ca624176a \
             ON eth,\n\
-            GET address \
+            SELECT address \
             FROM log \
             WHERE block_hash = 0xedb7f4a64744594838f7d9888883ae964fcb4714f6fe5cafb574d3ed6141ad5b, \
                   event_signature = Transfer(address,address,uint256), \
@@ -367,7 +367,7 @@ mod tests {
 
     #[test]
     fn test_build_ast_with_rpc_url() {
-        let source = "GET nonce, balance FROM account 0x1234567890123456789012345678901234567890 ON http://localhost:8545";
+        let source = "SELECT nonce, balance FROM account 0x1234567890123456789012345678901234567890 ON http://localhost:8545";
         let address = Address::from_str("0x1234567890123456789012345678901234567890").unwrap();
         let expected = vec![Expression::Get(GetExpression {
             entity: Entity::Account(Account::new(
@@ -387,7 +387,7 @@ mod tests {
 
     #[test]
     fn test_build_ast_with_transaction_comparison_filters() {
-        let source = "GET * FROM tx WHERE \
+        let source = "SELECT * FROM tx WHERE \
             block = 4638757, \
             gas_limit > 10000000, \
             gas_price < 10000000, \
@@ -452,7 +452,7 @@ mod tests {
     fn test_build_ast_with_chain_fields() {
         let test_cases = vec![
             (
-                "GET chain FROM block 1 ON eth",
+                "SELECT chain FROM block 1 ON eth",
                 Entity::Block(Block::new(
                     Some(vec![BlockId::Number(BlockNumberOrTag::Number(1))]),
                     None,
@@ -460,7 +460,7 @@ mod tests {
                 )),
             ),
             (
-                "GET chain FROM account 0x1234567890123456789012345678901234567890 ON eth",
+                "SELECT chain FROM account 0x1234567890123456789012345678901234567890 ON eth",
                 Entity::Account(Account::new(
                     Some(vec![NameOrAddress::Address(address!(
                         "1234567890123456789012345678901234567890"
@@ -470,7 +470,7 @@ mod tests {
                 )),
             ),
             (
-                "GET chain FROM tx 0x1234567890123456789012345678901234567890123456789012345678901234 ON eth",
+                "SELECT chain FROM tx 0x1234567890123456789012345678901234567890123456789012345678901234 ON eth",
                 Entity::Transaction(Transaction::new(
                     Some(vec![b256!(
                         "1234567890123456789012345678901234567890123456789012345678901234"
@@ -480,7 +480,7 @@ mod tests {
                 )),
             ),
             (
-                "GET chain FROM log WHERE block = 1 ON eth",
+                "SELECT chain FROM log WHERE block = 1 ON eth",
                 Entity::Logs(Logs::new(
                     vec![LogFilter::BlockRange(BlockRange::new(1.into(), None))],
                     vec![LogField::Chain],
@@ -505,7 +505,7 @@ mod tests {
 
     #[test]
     fn test_build_ast_with_chain_list() {
-        let source = "GET size FROM block 1 ON eth, op, arb";
+        let source = "SELECT size FROM block 1 ON eth, op, arb";
         let expected = vec![Expression::Get(GetExpression {
             entity: Entity::Block(Block::new(
                 Some(vec![BlockId::Number(BlockNumberOrTag::Number(1))]),
@@ -528,7 +528,7 @@ mod tests {
 
     #[test]
     fn test_build_ast_with_chain_wildcard() {
-        let source = "GET size FROM block 1 ON *";
+        let source = "SELECT size FROM block 1 ON *";
         let expected = vec![Expression::Get(GetExpression {
             entity: Entity::Block(Block::new(
                 Some(vec![BlockId::Number(BlockNumberOrTag::Number(1))]),
