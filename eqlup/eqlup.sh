@@ -1,7 +1,7 @@
 #!/bin/bash
 
-USERNAME="iankressin"
-REPO_NAME="eql"
+USERNAME="sand-worm-labs"
+REPO_NAME="sandworm-eql"
 REPO_URL="https://github.com/{$USERNAME}/${REPO_NAME}"
 REPO_API_URL="https://api.github.com/repos/${USERNAME}/${REPO_NAME}"
 CONFIG_FILE_URL="https://raw.githubusercontent.com/${USERNAME}/${REPO_NAME}/main/eqlup/default-config.json"
