@@ -1,5 +1,5 @@
-USERNAME="iankressin"
-REPO_NAME="eql"
+USERNAME="sand-worm-labs"
+REPO_NAME="sandworm-eql"
 EQLUP_URL="https://raw.githubusercontent.com/${USERNAME}/${REPO_NAME}/main/eqlup/eqlup.sh"
 
 initial_message() {
