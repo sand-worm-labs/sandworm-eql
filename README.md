@@ -86,7 +86,7 @@ Gets transformed into:
 # Install EQL version manager
 curl https://raw.githubusercontent.com/sand-worm-labs/sandworm-eql/main/eqlup/install.sh | sh
 
-# Install latest EQL version
+# Install the latest EQL version
 eqlup
 ```
 
