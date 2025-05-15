@@ -146,6 +146,12 @@
             "rpcs": [
                 "https://rpc.mekong.ethpandaops.io"
             ]
+        },
+        "mycelium":{
+            "default":"https://rpc.ecofundme.com",
+            "rpcs": [
+                "https://rpc.ecofundme.com"
+            ]
         }
     }
 }
