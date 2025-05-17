@@ -122,7 +122,7 @@ impl Chain {
             Chain::Sepolia => "https://rpc.ankr.com/eth_sepolia",
             Chain::Arbitrum => "https://rpc.ankr.com/arbitrum",
             Chain::Base => "https://base-rpc.publicnode.com",
-            Chain::Blast => "https://rpc.ankr.com/blas",
+            Chain::Blast => "https://blast-rpc.publicnode.com",
             Chain::Optimism => "https://optimism.drpc.org",
             Chain::Polygon => "https://polygon.llamarpc.com",
             Chain::Mantle => "https://mantle.drpc.org",
