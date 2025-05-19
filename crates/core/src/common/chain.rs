@@ -119,8 +119,8 @@ impl Chain {
     fn rpc_fallback(&self) -> &str {
         match self {
             Chain::Ethereum => "https://ethereum.drpc.org",
-            Chain::Sepolia => "https://rpc.ankr.com/eth_sepolia",
-            Chain::Arbitrum => "https://rpc.ankr.com/arbitrum",
+            Chain::Sepolia => "https://ethereum-sepolia-rpc.publicnode.com",
+            Chain::Arbitrum => "https://arbitrum-rpc.publicnode.com",
             Chain::Base => "https://base-rpc.publicnode.com",
             Chain::Blast => "https://blast-rpc.publicnode.com",
             Chain::Optimism => "https://optimism.drpc.org",
